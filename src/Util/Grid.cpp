@@ -1,20 +1,22 @@
 #include "../../include/Util/Grid.hpp"
 
-void configureGrid(uint size, std::vector<std::vector<Box>>* grid)
+void configureGrid(uint size, std::vector<std::vector<Circle>>* grid)
 {
-    std::vector<std::vector<Box>> cells;
-    uint row = GLOBAL::window_height/size;
-    uint column = GLOBAL::window_width/size;
+    std::vector<std::vector<Circle>> cells;
+    uint row = 10;
+    uint column = 10;
 
     for(uint i = 0; i < row; i++){
-        std::vector<Box> row_cells;
+        std::vector<Circle> row_cells;
         for(uint j = 0; j < column; j++){
-            Box box = Box(size, sf::Vector2f(i * size, j * size));
-            box.row = i;
-            box.col = j;
+            Circle circle = Circle(size, sf::Vector2f((i * 30) + 165, (j * 30) + 30));
+            circle.row = i;
+            circle.col = j;
 
-            //should i manually delete the box, or is it okay?
-            row_cells.push_back(box);
+            if(j == 0)
+                circle.pin = true;
+
+            row_cells.push_back(circle);
         }
         grid->push_back(row_cells);
     }

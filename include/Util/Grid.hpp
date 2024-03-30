@@ -3,4 +3,4 @@
 #include "../Entities/Entities.hpp"
 #include "../Globals.hpp"
 
-void configureGrid(uint size, std::vector<std::vector<Box>> *grid);
+void configureGrid(uint size, std::vector<std::vector<Circle>> *grid);

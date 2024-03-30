@@ -11,11 +11,19 @@ class Scene : public GameObject
 {
 private:
     static Scene *instance;
-    std::vector<std::vector<Box>> grid;
+    std::vector<std::vector<Circle>> grid;
+    std::vector<Line> lines;
+    bool aligned = false;
+    float rest_length = 20.f;
+    float stiffness = 0.2f;
 
 private:
     Scene();
     ~Scene();
+
+private:
+    void solve(Circle *a, Circle *b);
+    void solve(Circle *a, Circle *b, Circle *c);
 
 public:
     // Delete copy constructor and assignment operator to prevent cloning

@@ -34,7 +34,8 @@ void Circle::calcMomentOfInertia()
 
 void Circle::update(float dt)
 {
-    this->linearEuler(&this->property);
+    this->linearEuler(&this->property, this->pin);
+    // this->verlet(&this->property, this->pin);
 }
 
 void Circle::render(sf::RenderTarget *target)
