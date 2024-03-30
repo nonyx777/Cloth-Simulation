@@ -21,7 +21,7 @@ void Rigidbody::linearEuler(sf::Shape *shape, bool &pin)
     }
 
     this->force += gravity;
-    this->damping = this->linearVelocity * -0.01f;
+    this->damping = -this->linearVelocity * GLOBAL::damping_coefficient;
     this->force += damping;
     this->linearAcceleration += force;
     this->linearVelocity += this->linearAcceleration;

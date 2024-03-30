@@ -2,13 +2,9 @@
 
 void configureGrid(uint size, std::vector<std::vector<Circle>>* grid)
 {
-    std::vector<std::vector<Circle>> cells;
-    uint row = 10;
-    uint column = 10;
-
-    for(uint i = 0; i < row; i++){
+    for(uint i = 0; i < GLOBAL::row; i++){
         std::vector<Circle> row_cells;
-        for(uint j = 0; j < column; j++){
+        for(uint j = 0; j < GLOBAL::col; j++){
             Circle circle = Circle(size, sf::Vector2f((i * 30) + 165, (j * 30) + 30));
             circle.row = i;
             circle.col = j;

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "./Entities/Entity.hpp"
+#include "./Globals.hpp"
 
 class Rigidbody
 {
@@ -12,7 +13,6 @@ public:
     sf::Vector2f force;
     float torque;
     float elasticity;
-    sf::Vector2f damping;
 
     void linearEuler(sf::Shape *shape);
     void linearEuler(sf::Shape *shape, bool &pin);
@@ -26,4 +26,5 @@ public:
 
     //....
     sf::Vector2f gravity = sf::Vector2f(0.f, 1.f);
+    sf::Vector2f damping;
 };

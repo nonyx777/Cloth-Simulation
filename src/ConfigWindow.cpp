@@ -31,11 +31,14 @@ void ConfigWindow::update(float dt)
     GLOBAL::window_width = Math::_clampOnRange(GLOBAL::window_width, 400, 1000);
 
     // configure grid
-    ImGui::Text("Grid Configuration");
-    ImGui::InputInt("Cell Size", &GLOBAL::cell_size);
-    if (ImGui::Button("Display Grid"))
-        GLOBAL::display_grid = !GLOBAL::display_grid;
-    ImGui::Text("Display Grid: %s", GLOBAL::display_grid ? "True" : "False");
+    ImGui::Text("Particle Grid Configuration");
+    ImGui::InputInt("Row: ", &GLOBAL::row);
+    ImGui::InputInt("Column: ", &GLOBAL::col);
+    ImGui::InputInt("Particle Size", &GLOBAL::particle_size);
+    if (ImGui::Button("Display Particle"))
+        GLOBAL::display_particle = !GLOBAL::display_particle;
+    ImGui::Text("Display Grid: %s", GLOBAL::display_particle ? "True" : "False");
+    ImGui::InputFloat("Damping Coefficient", &GLOBAL::damping_coefficient);
 
     ImGui::End();
 }

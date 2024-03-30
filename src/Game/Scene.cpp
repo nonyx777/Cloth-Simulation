@@ -4,7 +4,7 @@ Scene *Scene::instance = nullptr;
 
 Scene::Scene()
 {
-    configureGrid(GLOBAL::cell_size, &this->grid);
+    configureGrid(GLOBAL::particle_size, &this->grid);
 }
 
 Scene::~Scene()
@@ -68,13 +68,16 @@ void Scene::update(float dt)
 
 void Scene::render(sf::RenderTarget *target)
 {
-    // for (uint i = 0; i < grid.size(); i++)
-    // {
-    //     for (uint j = 0; j < grid[i].size(); j++)
-    //     {
-    //         target->draw(grid[i][j].property);
-    //     }
-    // }
+    if (GLOBAL::display_particle)
+    {
+        for (uint i = 0; i < grid.size(); i++)
+        {
+            for (uint j = 0; j < grid[i].size(); j++)
+            {
+                target->draw(grid[i][j].property);
+            }
+        }
+    }
 
     for (Line &line : this->lines)
         line.render(target);
