@@ -25,6 +25,6 @@ public:
     sf::Vector2f current, previous;
 
     //....
-    sf::Vector2f gravity = sf::Vector2f(0.f, 1.f);
+    sf::Vector2f gravity = sf::Vector2f(0.f, 0.1f);
     sf::Vector2f damping;
 };

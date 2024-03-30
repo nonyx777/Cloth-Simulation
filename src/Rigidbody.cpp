@@ -42,6 +42,8 @@ void Rigidbody::verlet(sf::Shape *shape, bool &pin)
     }
 
     this->force += gravity;
+    this->damping = -this->linearVelocity * GLOBAL::damping_coefficient;
+    this->force += damping;
     this->linearAcceleration += this->force;
 
     current = shape->getPosition();

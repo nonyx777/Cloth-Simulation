@@ -14,8 +14,7 @@ private:
     std::vector<std::vector<Circle>> grid;
     std::vector<Line> lines;
     bool aligned = false;
-    float rest_length = 20.f;
-    float stiffness = 0.2f;
+    float stiffness = 0.3f;
 
 private:
     Scene();

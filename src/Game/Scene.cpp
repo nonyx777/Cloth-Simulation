@@ -89,7 +89,7 @@ void Scene::solve(Circle *a, Circle *b)
     sf::Vector2f unit = Math::_normalize(displace);
     float distance = Math::_length(displace);
 
-    sf::Vector2f force = (stiffness * (distance - rest_length)) * unit;
+    sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
 
     a->force += -(force);
     b->force += force;
@@ -102,7 +102,7 @@ void Scene::solve(Circle *a, Circle *b, Circle *c)
     sf::Vector2f unit = Math::_normalize(displace);
     float distance = Math::_length(displace);
 
-    sf::Vector2f force = (stiffness * (distance - rest_length)) * unit;
+    sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
 
     a->force += -(force);
     b->force += force;
@@ -112,7 +112,7 @@ void Scene::solve(Circle *a, Circle *b, Circle *c)
     unit = Math::_normalize(displace);
     distance = Math::_length(displace);
 
-    force = (stiffness * (distance - rest_length)) * unit;
+    force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
     a->force += -(force);
     c->force += force;
 }
