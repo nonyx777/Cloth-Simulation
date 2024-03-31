@@ -14,7 +14,9 @@ public:
 public:
     Engine();
 
+    void pollEvent() override;
     void update(float dt) override;
+    void update(float dt, const sf::Vector2f &position);
     void render(sf::RenderTarget *target) override;
     void render();
 

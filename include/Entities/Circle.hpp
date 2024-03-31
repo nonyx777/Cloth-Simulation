@@ -11,6 +11,7 @@ public:
     int col = 0;
     int row = 0;
     bool pin = false;
+    bool teared = false;
 
 private:
     void initVariables();

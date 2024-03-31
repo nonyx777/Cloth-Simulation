@@ -14,6 +14,24 @@ void Engine::initWindow()
     this->window->setFramerateLimit(60);
 }
 
+void Engine::pollEvent()
+{
+    while (this->window->pollEvent(this->event))
+    {
+        this->eventImGui();
+        switch (this->event.type)
+        {
+        case sf::Event::Closed:
+            this->window->close();
+            break;
+        case sf::Event::MouseButtonPressed:
+            if (this->event.mouseButton.button == sf::Mouse::Left)
+                scene->move(this->mouse_position_view);
+            break;
+        }
+    }
+}
+
 void Engine::update(float dt)
 {
     this->pollEvent();

@@ -81,6 +81,8 @@ void Scene::render(sf::RenderTarget *target)
 
     for (Line &line : this->lines)
         line.render(target);
+
+    range.render(target);
 }
 
 void Scene::solve(Circle *a, Circle *b)
@@ -115,4 +117,19 @@ void Scene::solve(Circle *a, Circle *b, Circle *c)
     force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
     a->force += -(force);
     c->force += force;
+}
+
+void Scene::move(const sf::Vector2f &position)
+{
+    for (uint i = 0; i < grid.size(); i++)
+    {
+        for (uint j = 0; j < grid[i].size(); j++)
+        {
+            float d = Math::_length(position - grid[i][j].property.getPosition());
+            if (d < 20.f)
+            {
+                grid[i][j].force += sf::Vector2f(2.f, 2.f);
+            }
+        }
+    }
 }
