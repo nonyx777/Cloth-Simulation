@@ -40,4 +40,5 @@ public:
     void render(sf::RenderTarget *target) override;
 
     void move(const sf::Vector2f &position);
+    void tear(const sf::Vector2f &position);
 };

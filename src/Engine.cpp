@@ -27,6 +27,8 @@ void Engine::pollEvent()
         case sf::Event::MouseButtonPressed:
             if (this->event.mouseButton.button == sf::Mouse::Left)
                 scene->move(this->mouse_position_view);
+            if (this->event.mouseButton.button == sf::Mouse::Right)
+                scene->tear(this->mouse_position_view);
             break;
         }
     }
