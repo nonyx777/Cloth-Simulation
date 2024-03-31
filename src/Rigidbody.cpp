@@ -20,15 +20,29 @@ void Rigidbody::linearEuler(sf::Shape *shape, bool &pin)
         return;
     }
 
+    float elapsed_time = clock.restart().asSeconds();
+    float angle = elapsed_time * wind_changerate;
+    wind_strength_x = wind_amplitude * Math::_cos(tempo) * 0.5f;
+    wind_strength_y = wind_amplitude * Math::_sin(tempo) * 0.5f;
+
+    this->wind = sf::Vector2f(wind_strength_x, wind_strength_y);
+
     this->force += gravity;
     this->damping = -this->linearVelocity * GLOBAL::damping_coefficient;
     this->force += damping;
+    // this->force += wind;
+
     this->linearAcceleration += force;
     this->linearVelocity += this->linearAcceleration;
     shape->move(this->linearVelocity + this->damping);
 
     this->linearAcceleration = sf::Vector2f(0.f, 0.f);
     this->force = sf::Vector2f(0.f, 0.f);
+
+    if (tempo < 360)
+        tempo++;
+    else
+        tempo = 0;
 }
 
 void Rigidbody::verlet(sf::Shape *shape, bool &pin)
@@ -47,8 +61,8 @@ void Rigidbody::verlet(sf::Shape *shape, bool &pin)
     this->linearAcceleration += this->force;
 
     current = shape->getPosition();
-    this->linearVelocity = (current - previous) + this->linearAcceleration;
-    shape->move(this->linearVelocity);
+    this->linearVelocity = current - previous;
+    shape->move(this->linearVelocity + this->linearAcceleration);
     previous = current;
 
     this->force = sf::Vector2f(0.f, 0.f);

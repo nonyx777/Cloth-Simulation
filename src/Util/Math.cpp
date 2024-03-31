@@ -147,3 +147,14 @@ float Math::_map(float value, float max1, float max2)
     float result = (value * max2) / max1;
     return result;
 }
+
+int Math::_random(int min, int max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::uniform_int_distribution<int> distribution(min, max);
+    int random_number = distribution(gen);
+
+    return random_number;
+}

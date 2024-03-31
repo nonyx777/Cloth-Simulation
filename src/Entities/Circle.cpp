@@ -18,6 +18,8 @@ Circle::Circle(float radius, sf::Vector2f position)
     this->property.setRadius(radius);
     this->property.setOrigin(sf::Vector2f(radius, radius));
     this->property.setPosition(position);
+
+    this->previous = position - sf::Vector2f(2.f, 2.f);
 }
 
 void Circle::initVariables()

@@ -28,18 +28,18 @@ void Scene::update(float dt)
     {
         for (int j = 0; j < grid[i].size(); j++)
         {
-            if (i == grid.size() - 1 && j == grid.size() - 1)
+            if (i == GLOBAL::row - 1 && j == GLOBAL::col - 1)
             {
                 continue;
             }
 
-            if (j != grid.size() - 1 && i == grid.size() - 1)
+            if (j != GLOBAL::col - 1 && i == GLOBAL::row - 1)
             {
                 Line line = Line(this->grid[i][j].property.getPosition(), this->grid[i][j + 1].property.getPosition());
                 this->lines.push_back(line);
                 this->solve(&this->grid[i][j], &this->grid[i][j + 1]);
             }
-            else if (j == grid.size() - 1 && i < grid.size() - 1)
+            else if (j == GLOBAL::col - 1 && i < GLOBAL::row - 1)
             {
                 Line line = Line(this->grid[i][j].property.getPosition(), this->grid[i + 1][j].property.getPosition());
                 this->lines.push_back(line);
