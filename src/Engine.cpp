@@ -24,12 +24,6 @@ void Engine::pollEvent()
         case sf::Event::Closed:
             this->window->close();
             break;
-        case sf::Event::MouseButtonPressed:
-            if (this->event.mouseButton.button == sf::Mouse::Left)
-                scene->move(this->mouse_position_view);
-            if (this->event.mouseButton.button == sf::Mouse::Right)
-                scene->tear(this->mouse_position_view);
-            break;
         }
     }
 }
@@ -40,7 +34,7 @@ void Engine::update(float dt)
     this->mouse_position = sf::Mouse::getPosition(*this->window);
     this->mouse_position_view = this->window->mapPixelToCoords(this->mouse_position);
 
-    scene->update(dt);
+    scene->update(dt, this->mouse_position_view);
     this->updateImGui();
     ImGui::Begin("Proto");
     ImGui::Text("FPS: %f", GLOBAL::fps);

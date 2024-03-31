@@ -19,7 +19,7 @@ private:
     float frequency = 1.f;
     int wind_count = 0;
     bool aligned = false;
-    float stiffness = 0.5f;
+    float stiffness = 0.3f;
 
 private:
     Scene();
@@ -37,6 +37,7 @@ public:
     static Scene *getInstance();
 
     void update(float dt) override;
+    void update(float dt, const sf::Vector2f &position);
     void render(sf::RenderTarget *target) override;
 
     void move(const sf::Vector2f &position);

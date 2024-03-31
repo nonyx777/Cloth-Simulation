@@ -22,7 +22,17 @@ Scene *Scene::getInstance()
 
 void Scene::update(float dt)
 {
+}
+
+void Scene::update(float dt, const sf::Vector2f &position)
+{
     this->lines.clear();
+
+    // mouse input (pushing/pulling and tearing)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        this->move(position);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+        this->tear(position);
 
     sf::Vector2f wind_mov = sf::Vector2f(amplitude * Math::_cos(wind_count * frequency), amplitude * Math::_sin(wind_count * frequency)) + sf::Vector2f(GLOBAL::window_width / 2.f, GLOBAL::window_height / 4.f);
     windRange.property.setPosition(wind_mov);
@@ -93,9 +103,9 @@ void Scene::update(float dt)
 
                 if (grid[i][j + 1].teared == true && grid[i + 1][j].teared == false)
                 {
-                    Line line = Line(this->grid[i][j].property.getPosition(), this->grid[i+1][j].property.getPosition());
+                    Line line = Line(this->grid[i][j].property.getPosition(), this->grid[i + 1][j].property.getPosition());
                     this->lines.push_back(line);
-                    this->solve(&this->grid[i][j], &this->grid[i+1][j]);
+                    this->solve(&this->grid[i][j], &this->grid[i + 1][j]);
                     continue;
                 }
             }
@@ -177,7 +187,7 @@ void Scene::move(const sf::Vector2f &position)
             float d = Math::_length(position - grid[i][j].property.getPosition());
             if (d < 20.f)
             {
-                grid[i][j].force += sf::Vector2f(2.f, 2.f);
+                grid[i][j].force += sf::Vector2f(0.5f, 0.5f);
             }
         }
     }
