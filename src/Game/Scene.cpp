@@ -22,6 +22,21 @@ Scene *Scene::getInstance()
 
 void Scene::update(float dt)
 {
+    sf::Vector2f wind_mov = sf::Vector2f(amplitude * Math::_cos(wind_count * frequency), amplitude * Math::_sin(wind_count * frequency)) + sf::Vector2f(GLOBAL::window_width / 2.f, GLOBAL::window_height / 4.f);
+    windRange.property.setPosition(wind_mov);
+
+    for (uint i = 0; i < grid.size(); i++)
+    {
+        for (uint j = 0; j < grid[i].size(); j++)
+        {
+            float d = Math::_length(windRange.property.getPosition() - grid[i][j].property.getPosition());
+            if (d < 70.f)
+            {
+                grid[i][j].force += sf::Vector2f(0.05f, 0.05f);
+            }
+        }
+    }
+
     // solver
     this->lines.clear();
     for (int i = 0; i < grid.size(); i++)
@@ -64,6 +79,11 @@ void Scene::update(float dt)
             this->grid[i][j].update(dt);
         }
     }
+
+    if (wind_count < 360)
+        wind_count++;
+    else
+        wind_count = 0;
 }
 
 void Scene::render(sf::RenderTarget *target)
@@ -81,8 +101,6 @@ void Scene::render(sf::RenderTarget *target)
 
     for (Line &line : this->lines)
         line.render(target);
-
-    range.render(target);
 }
 
 void Scene::solve(Circle *a, Circle *b)

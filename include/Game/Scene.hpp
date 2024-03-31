@@ -14,8 +14,10 @@ private:
     static Scene *instance;
     std::vector<std::vector<Circle>> grid;
     std::vector<Line> lines;
-    Box range;
-
+    Box windRange = Box(sf::Vector2f(100.f, 60.f), sf::Vector2f(GLOBAL::window_width/2.f, GLOBAL::window_height/2.f));
+    float amplitude = 100.f;
+    float frequency = 1.f;
+    int wind_count = 0;
     bool aligned = false;
     float stiffness = 0.5f;
 
