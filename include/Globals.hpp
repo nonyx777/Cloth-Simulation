@@ -13,4 +13,5 @@ namespace GLOBAL
     inline int row = 90;
     inline int col = 40;
     inline float rest_length = 5.f;
+    inline float tear_distance = 50.f;
 }

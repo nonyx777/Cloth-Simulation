@@ -40,6 +40,7 @@ void ConfigWindow::update(float dt)
     ImGui::Text("Display Grid: %s", GLOBAL::display_particle ? "True" : "False");
     ImGui::InputFloat("Damping Coefficient", &GLOBAL::damping_coefficient);
     ImGui::InputFloat("Resting Length", &GLOBAL::rest_length);
+    ImGui::InputFloat("Tear Distance", &GLOBAL::tear_distance);
 
     ImGui::End();
 }

@@ -147,8 +147,15 @@ void Scene::render(sf::RenderTarget *target)
 void Scene::solve(Circle *a, Circle *b)
 {
     sf::Vector2f displace = a->property.getPosition() - b->property.getPosition();
-    sf::Vector2f unit = Math::_normalize(displace);
     float distance = Math::_length(displace);
+
+    if (distance >= GLOBAL::tear_distance)
+    {
+        b->teared = true;
+        return;
+    }
+
+    sf::Vector2f unit = Math::_normalize(displace);
 
     sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
 
@@ -160,22 +167,39 @@ void Scene::solve(Circle *a, Circle *b, Circle *c)
 {
     // a -> b
     sf::Vector2f displace = a->property.getPosition() - b->property.getPosition();
-    sf::Vector2f unit = Math::_normalize(displace);
     float distance = Math::_length(displace);
 
-    sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
+    if (distance < GLOBAL::tear_distance)
+    {
+        sf::Vector2f unit = Math::_normalize(displace);
 
-    a->force += -(force);
-    b->force += force;
+        sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
 
-    // a -> c
-    displace = a->property.getPosition() - c->property.getPosition();
-    unit = Math::_normalize(displace);
-    distance = Math::_length(displace);
+        a->force += -(force);
+        b->force += force;
+    }
 
-    force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
-    a->force += -(force);
-    c->force += force;
+    else
+    {
+        b->teared = true;
+    }
+
+    if (distance < GLOBAL::tear_distance)
+    {
+        // a -> c
+        displace = a->property.getPosition() - c->property.getPosition();
+        sf::Vector2f unit = Math::_normalize(displace);
+        distance = Math::_length(displace);
+
+        sf::Vector2f force = (stiffness * (distance - GLOBAL::rest_length)) * unit;
+        a->force += -(force);
+        c->force += force;
+    }
+
+    else
+    {
+        c->teared = true;
+    }
 }
 
 void Scene::move(const sf::Vector2f &position)
