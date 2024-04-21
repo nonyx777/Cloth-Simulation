@@ -33,34 +33,40 @@ void Quad::insert(Circle *n)
     if (!collision._boxPointCollide(this->box, n->property.getPosition()))
         return;
 
-    if (this->node == nullptr && nw == nullptr)
+    if (this->node == nullptr && !subdivided)
     {
         this->node = n;
+        subdivided = true;
         return;
     }
 
-    if (nw == nullptr)
-    {
-        sf::Vector2f mid = sf::Vector2f((topLeft.x + botRight.x) / 2, (topLeft.y + botRight.y) / 2);
-        nw = new Quad(topLeft, mid);
-        sw = new Quad(sf::Vector2f(topLeft.x, mid.y), sf::Vector2f(mid.x, botRight.y));
-        ne = new Quad(sf::Vector2f(mid.x, topLeft.y), sf::Vector2f(botRight.x, mid.y));
-        se = new Quad(mid, botRight);
-    }
+    sf::Vector2f mid = sf::Vector2f((topLeft.x + botRight.x) / 2, (topLeft.y + botRight.y) / 2);
 
     if (n->property.getPosition().x < (topLeft.x + botRight.x) / 2)
     {
         if (n->property.getPosition().y < (topLeft.y + botRight.y) / 2)
+        {
+            nw = new Quad(topLeft, mid);
             nw->insert(n); // North-West
+        }
         else
+        {
+            sw = new Quad(sf::Vector2f(topLeft.x, mid.y), sf::Vector2f(mid.x, botRight.y));
             sw->insert(n); // South-West
+        }
     }
     else
     {
         if (n->property.getPosition().y < (topLeft.y + botRight.y) / 2)
+        {
+            ne = new Quad(sf::Vector2f(mid.x, topLeft.y), sf::Vector2f(botRight.x, mid.y));
             ne->insert(n); // North-East
+        }
         else
+        {
+            se = new Quad(mid, botRight);
             se->insert(n); // South-East
+        }
     }
 }
 
@@ -84,20 +90,31 @@ std::vector<Circle *> Quad::search(sf::Vector2f topLeft_, sf::Vector2f botRight_
         }
     }
 
-    if (nw == nullptr || sw == nullptr || ne == nullptr || se == nullptr)
+    if (!subdivided)
     {
         return found;
     }
 
-    std::vector<Circle *> nw_found = nw->search(topLeft_, botRight_);
-    std::vector<Circle *> sw_found = sw->search(topLeft_, botRight_);
-    std::vector<Circle *> ne_found = ne->search(topLeft_, botRight_);
-    std::vector<Circle *> se_found = se->search(topLeft_, botRight_);
-
-    found.insert(found.end(), nw_found.begin(), nw_found.end());
-    found.insert(found.end(), sw_found.begin(), sw_found.end());
-    found.insert(found.end(), ne_found.begin(), ne_found.end());
-    found.insert(found.end(), se_found.begin(), se_found.end());
+    if (nw != nullptr)
+    {
+        std::vector<Circle *> nw_found = nw->search(topLeft_, botRight_);
+        found.insert(found.end(), nw_found.begin(), nw_found.end());
+    }
+    if (sw != nullptr)
+    {
+        std::vector<Circle *> sw_found = sw->search(topLeft_, botRight_);
+        found.insert(found.end(), sw_found.begin(), sw_found.end());
+    }
+    if (ne != nullptr)
+    {
+        std::vector<Circle *> ne_found = ne->search(topLeft_, botRight_);
+        found.insert(found.end(), ne_found.begin(), ne_found.end());
+    }
+    if (se != nullptr)
+    {
+        std::vector<Circle *> se_found = se->search(topLeft_, botRight_);
+        found.insert(found.end(), se_found.begin(), se_found.end());
+    }
 
     return found;
 }

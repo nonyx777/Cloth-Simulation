@@ -6,19 +6,6 @@
 #include "../Entities/Entities.hpp"
 #include "Collision.hpp"
 
-// The objects that we want stored in the quadtree
-struct Node
-{
-    sf::Vector2f pos;
-    int data;
-    Node(sf::Vector2f _pos, int _data)
-    {
-        pos = _pos;
-        data = _data;
-    }
-    Node() { data = 0; }
-};
-
 class Quad
 {
 public:
@@ -26,6 +13,7 @@ public:
     sf::Vector2f botRight;
     Circle *node;
     Box box;
+    bool subdivided = false;
 
     Quad *ne;
     Quad *nw;
